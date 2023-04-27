@@ -56,23 +56,29 @@ with conn.cursor() as cursor:
             print(x)
 
             try:
-                timestamp = datetime.strptime(line["FECHA"] ,"%d%b%Y:%H:%M:%S").replace(hour=int(line["HORA"]))
+                raw_hour = int(line["HORA"])
+                adjusted_hour = 0 if raw_hour == 24 else raw_hour # in some entries HORA is 24, which probably means 0
+                timestamp = datetime.strptime(line["FECHA"] ,"%d%b%Y:%H:%M:%S").replace(hour=adjusted_hour)
                 
                 line.pop("FECHA")
                 line.pop("HORA")
                
                 for key, val in line.items():
-                    air_attribute, station = parse_header(key)
-                    #print(val)
-                    measured_value = float(val)
-                    
-                    cursor.execute("""
-                            INSERT INTO MEASUREMENTS (MEASURED_ON, STATION, AIR_ATTRIBUTE, VALUE) VALUES 
-                            (%s, %s, %s, %s)
-                            """, 
-                        (timestamp, stations_ids[station], air_attributes_ids[air_attribute], measured_value)
-                    )
+                    try:
+                        air_attribute, station = parse_header(key)
+                        #print(val)
+                        measured_value = float(val)
+                        
+                        cursor.execute("""
+                                INSERT INTO MEASUREMENTS (MEASURED_ON, STATION, AIR_ATTRIBUTE, VALUE) VALUES 
+                                (%s, %s, %s, %s)
+                                """, 
+                            (timestamp, stations_ids[station], air_attributes_ids[air_attribute], measured_value)
+                        )
+                    except ValueError:
+                        print(f"Invalid or null measurement detected: {val}")
+                        continue
                 
             except ValueError:
-                print("Invalid or null measurement detected")
+                print("Invalid date detected")
                 continue
