@@ -1,0 +1,4 @@
+luigi
+psycopg2-binary
+google-cloud-bigquery
+#google-auth
