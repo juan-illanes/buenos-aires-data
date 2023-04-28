@@ -27,7 +27,7 @@ El workflow del sistema es el siguiente:
 2. Se ejecuta un script de python en su propio ambiente virtual que:
     1. Crea la estructura de la base de datos OLTP.
     2. Limpia, preprocesa e inserta los datos provenientes del CSV público sobre la calidad de aire de Buenos Aires Data.
-3. Una vez que la base de datos está cargada se ejecuta un proceso ETL definido usando Luigi que:
+3. Una vez que la base de datos está cargada se ejecuta un proceso ETL definido usando [Luigi](https://github.com/spotify/luigi) que:
     1. Extrae los datos de la base de datos postgres y los almacena temporalmente como varios CSVs dentro de un archivo ZIP
     2. Descomprime el archivo ZIP, transforma los datos desnormalizándolos y genera un CSV final.
     3. Toma el CSV final y lo carga en una tabla de un Dataset de Google Bigquery (el proyecto existe previamente), utilizando para ellos credenciales de servicio específicamente creadas con ese fin.
