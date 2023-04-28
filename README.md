@@ -2,7 +2,7 @@
 
 ## Requisitos
 
-Paquetes: `python3 y python3-venv`
+Paquetes: `python3`,  `python3-venv`, `python3-dev`, `build-essential` y `libpq-dev`
 
 Servicios: `Docker`
  
