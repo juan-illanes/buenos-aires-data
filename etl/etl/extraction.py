@@ -44,7 +44,7 @@ def execute():
 
         # extract all the measurements
         with open(measurements_path, "w+") as measurements_file:
-            cursor.execute("SELECT MEASURED_ON, STATION, AIR_ATTRIBUTE, VALUE FROM MEASUREMENTS ORDER BY MEASURED_ON ASC LIMIT 1000")
+            cursor.execute("SELECT MEASURED_ON, STATION, AIR_ATTRIBUTE, VALUE FROM MEASUREMENTS ORDER BY MEASURED_ON ASC")
             measurements = list(cursor.fetchall())
 
             for m in measurements:
