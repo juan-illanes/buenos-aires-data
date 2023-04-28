@@ -2,7 +2,7 @@
 
 ## Requisitos
 
-Paquetes: `python3 y python3-pip`
+Paquetes: `python3 y python3-venv`
 
 Servicios: `Docker`
  
