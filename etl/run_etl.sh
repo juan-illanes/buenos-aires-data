@@ -9,6 +9,7 @@ echo "1b. Activating the virtual environment..."
 echo "... done!"
 
 echo "1c. Installing dependencies..."
+pip install --upgrade pip wheel
 pip install -r requirements.txt
 echo "... done!"
 
